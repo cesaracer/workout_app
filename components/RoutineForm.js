@@ -14,12 +14,12 @@ function RoutineForm(props){
     const navigation = useNavigation()
 
     const handleWorkoutAdd = () => {
-        // if(duration === 0){
-        //     return
-        // }
-        // if(workoutName === ''){
-        //     return
-        // }
+        if(duration === 0){
+            return
+        }
+        if(workoutName === ''){
+            return
+        }
         let workout = {
             name: workoutName,
             duration: duration
@@ -28,6 +28,8 @@ function RoutineForm(props){
             ...workouts,
             workout
         ])
+        setDuration(0)
+        setWorkoutName('')
     }
 
     const handleRoutineAdd = () => {
@@ -48,7 +50,7 @@ function RoutineForm(props){
     }
 
     const validate = (num) => {
-        if(typeof(num) === Number){
+        if(!isNaN(num)){
             setDuration(num)
         }
     }
