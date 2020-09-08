@@ -1,4 +1,4 @@
-import {ADD_ROUTINE, DEL_ROUTINE, SET_ROUTINE} from '../actions/actionTypes'
+import {ADD_ROUTINE, DEL_ROUTINE, SET_ROUTINE, FETCH} from '../actions/actionTypes'
 import { combineReducers } from 'redux';
 
 const initialRoutine = {
@@ -19,6 +19,8 @@ function routineListReducer(state = [], action){
                 ...state.slice(0, index),
                 ...state.slice(index + 1)
             ]
+        case FETCH: 
+            return state = action.routines
         default:
             return state
     }
