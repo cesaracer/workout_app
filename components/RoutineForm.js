@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { View, TextInput, Text, Button, StyleSheet, ScrollView } from 'react-native'
+import { View, TextInput, Button, StyleSheet, ScrollView, AsyncStorage } from 'react-native'
 import {connect} from 'react-redux'
-import {addRoutine} from '../actions/action'
+import {addRoutine, loadRoutines} from '../actions/action'
 import { useNavigation } from '@react-navigation/native'
+import Workout from './Workout'
+import Axios from 'axios'
 
 function RoutineForm(props){
-    const [toggle, setToggle] = useState(false)
     const [routineName, setRoutineName] = useState('')
     const [workouts, setWorkouts] = useState([])
     const [workoutName, setWorkoutName] = useState('')
@@ -46,6 +47,8 @@ function RoutineForm(props){
         }
 
         props.addRoutine(routine)
+        Axios.post('https://us-central1-routine-app-99182.cloudfunctions.net/app/routines/add', routine)
+        props.fetchRoutines()
         navigation.navigate('Home')
     }
 
@@ -67,7 +70,7 @@ function RoutineForm(props){
             </View>
             <ScrollView>
                 {
-                    workouts.map(w => <Text>{w.name} time: {w.duration}</Text>)
+                    workouts.map(w => <Workout name={w.name} duration={w.duration}/>)
                 }
             </ScrollView>
             <Button color='orange' style={styles.add_btn} onPress={handleRoutineAdd} title='Save Routine'/>
@@ -93,7 +96,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        addRoutine: routine => dispatch(addRoutine(routine))
+        addRoutine: routine => dispatch(addRoutine(routine)),
+        fetchRoutines: () => dispatch(loadRoutines())
     }
 }
 
