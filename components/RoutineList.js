@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import RoutineItem from './RoutineItem'
-import { debug } from 'react-native-reanimated'
+import { loadRoutines } from '../actions/action'
+import Axios from 'axios'
 
-function RoutineList({routines}){
+function RoutineList(props){
+    useEffect(() => {
+        props.fetchList()
+    },[])
     return(
         <ScrollView>
             {
-                routines.map(r => <RoutineItem name={r.name} workouts={r.workouts}/>)
+                props.routines.map(r => <RoutineItem name={r.name} workouts={r.workouts}/>)
             }
         </ScrollView>
     )
@@ -20,4 +24,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(RoutineList)
+const mapDispatchToProps = (dispatch) => {
+    return{
+        fetchList: () => dispatch(loadRoutines())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoutineList)
