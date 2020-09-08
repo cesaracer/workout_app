@@ -4,11 +4,12 @@ import {connect} from 'react-redux'
 import { setRoutine } from '../actions/action'
 import { useNavigation } from '@react-navigation/native'
 
-function RoutineItem({name, workouts, setRoutine}){
+function RoutineItem({name, workouts, id, setRoutine}){
     const navigation = useNavigation()
 
     const handlePress = () => {
         setRoutine({
+            id: id,
             name: name,
             workouts: workouts
         })

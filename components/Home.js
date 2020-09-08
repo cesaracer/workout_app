@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { loadRoutines } from '../actions/action'
 import { connect } from 'react-redux'
 
-function Home({loadList}){
+function Home(){
     const navigation = useNavigation()
     return(
         <View style={styles.page}>
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         right: 0
     },
     page: {
+        paddingTop: 15,
         height: '100%'
     }
 })

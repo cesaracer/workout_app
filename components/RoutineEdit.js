@@ -1,36 +1,80 @@
 import React, { useState } from 'react'
-import {View, TextInput, Button} from 'react-native'
+import {View, TextInput, Button, StyleSheet, ScrollView} from 'react-native'
+import Axios from 'axios'
+import {connect} from 'react-redux'
+import Workout from './Workout'
+import { useNavigation } from '@react-navigation/native'
+import { loadRoutines } from '../actions/action'
 
-function RoutineEdit(){
-    const [toggle, setToggle] = useState(false)
-    const [desc, setDesc] = useState('Add new exercise')
+function RoutineEdit({routine, loadRoutines}){
+    const [name, setName] = useState('')
+    const [workoutName, setWorkoutName] = useState('')
+    const [duration, setDuration] = useState(0)
+    const [workouts, setWorkouts] = useState(routine.workouts)
 
-    const changeDesc = () => {
-        setToggle(!toggle)
-        if(toggle){
-            setDesc('Cancel')
-        }
-        else{
-            setDesc('Add new exercise')
+    const navigation = useNavigation()
+
+    const update = async () => {
+        await Axios.patch(`https://us-central1-routine-app-99182.cloudfunctions.net/app/routines/edit/${routine.id}`, {"name": name, "workouts": workouts})
+        navigation.navigate('Home')
+        loadRoutines()
+    }
+
+    const validate = (num) => {
+        if(!isNaN(num)){
+            setDuration(num)
         }
     }
 
-    
+    const addWorkout = () => {
+        let workout = {
+            name: workoutName,
+            duration: duration
+        }
+
+        setWorkouts([
+            ...workouts,
+            workout
+        ])
+    }
 
     return(
-        <View>
-            <TextInput placeholder='New routine name'/>
-            <Button title={desc} onPress={changeDesc}/>
-            {
-                toggle ?
-                <View>
-                    <TextInput placeholder='Exercise name' onChangeText={}/>
-                    <TextInput placeholder='Minutes'/>
-                    <Button title='Add exercise' color='orange'/>
-                </View>
-                :
-                <View></View>
-            }
+        <View style={styles.page}>
+            <TextInput style={{marginTop: 15}} placeholder='New routine name' onChangeText={text => setName(text)}/>
+            <View style={{marginTop: 15, marginBottom: 10}}>
+                <TextInput placeholder='Exercise name' onChangeText={text => setWorkoutName(text)}/>
+                <TextInput style={{marginBottom: 15}} placeholder='Minutes' onChangeText={text => validate(text)}/>
+                <Button title='Add exercise' color='orange' onPress={addWorkout}/>
+            </View>
+            <ScrollView>
+                {
+                    workouts.map(w => <Workout name={w.name} duration={w.duration} />)
+                }
+            </ScrollView>
+            <Button title='Save' onPress={update} color='orange'/>
         </View>
     )
 }
+
+const mapStateToProps = (state) => {
+    return{
+        routine: state.routine
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        loadRoutines: () => dispatch(loadRoutines())
+    }
+}
+
+const styles = StyleSheet.create({
+    page: {
+        width: '80%',
+        height: '95%',
+        marginLeft: '10%'
+    }
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoutineEdit)

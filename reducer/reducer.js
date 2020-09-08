@@ -2,6 +2,7 @@ import {ADD_ROUTINE, DEL_ROUTINE, SET_ROUTINE, FETCH} from '../actions/actionTyp
 import { combineReducers } from 'redux';
 
 const initialRoutine = {
+    id: '',
     name: '',
     workouts: []
 }

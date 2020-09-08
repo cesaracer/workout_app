@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './components/Home';
 import RoutineForm from './components/RoutineForm';
 import Routine from './components/Routine';
+import RoutineEdit from './components/RoutineEdit';
 const Stack = createStackNavigator();
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Create Routine" component={RoutineForm} />
         <Stack.Screen name="Details" component={Routine}/>
+        <Stack.Screen name="Edit" component={RoutineEdit}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

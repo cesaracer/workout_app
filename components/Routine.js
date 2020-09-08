@@ -1,42 +1,64 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import Workout from './Workout'
-import { View, Text, ScrollView, StyleSheet, AsyncStorage } from 'react-native'
+import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { loadRoutines } from '../actions/action'
+import { useNavigation } from '@react-navigation/native'
+import Axios from 'axios'
 
-function Routine({routine}){
-    
-    const handleClick = () => {
-        let res = AsyncStorage.getItem('bruh')
-        alert(res)
+function Routine({routine, loadRoutines}){
+    const navigation = useNavigation()
+
+    const del = async () => {
+        await Axios.delete(`https://us-central1-routine-app-99182.cloudfunctions.net/app/routines/delete/${routine.id}`)
+        loadRoutines()
+        navigation.navigate('Home')
     }
 
     return(
         <View style={styles.page}>
+            <View style={styles.footer}>
+                <TouchableOpacity style={styles.btn_del} onPress={del}>
+                    <Text style={styles.text}>Delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn_edit} onPress={() => navigation.navigate('Edit')}>
+                    <Text style={styles.text}>Edit</Text>
+                </TouchableOpacity>
+                
+            </View>
             <ScrollView>
                 {
                     routine.workouts.map(w => <Workout name={w.name} duration={w.duration}/>)
                 }
             </ScrollView>
-            <TouchableOpacity style={styles.btn_edit}>
-                <Text style={styles.text}>Edit</Text>
-            </TouchableOpacity>
+            
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    footer: {
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+        justifyContent: 'space-between',
+        marginTop: 20
+    },
     btn_edit: {
+        padding: 5,
         backgroundColor: 'orange',
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: 70,
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btn_del: {
+        padding: 5,
+        backgroundColor: 'red',
+        width: 70,
+        borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        bottom: 15,
-        right: -30,
-        alignSelf: 'flex-end'
-        
     },
     page: {
         width: '80%',
@@ -46,7 +68,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 20
+        fontSize: 15
     }
 })
 
@@ -56,4 +78,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Routine)
+const mapDispatchToProps = (dispatch) => {
+    return{
+        loadRoutines: () => dispatch(loadRoutines())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routine)

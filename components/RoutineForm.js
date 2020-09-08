@@ -65,7 +65,7 @@ function RoutineForm(props){
             </View>
             <View style={styles.form_group}>
                 <TextInput placeholder='Exercise Name' onChangeText={text => setWorkoutName(text)} value={workoutName}/>
-                <TextInput placeholder='Minutes' onChangeText={text => validate(text)} value={duration}/>
+                <TextInput style={{marginBottom: 15}} placeholder='Minutes' onChangeText={text => validate(text)} value={duration}/>
                 <Button color='orange' title='Add Workout' onPress={handleWorkoutAdd}/>
             </View>
             <ScrollView>
@@ -80,13 +80,13 @@ function RoutineForm(props){
 
 const styles = StyleSheet.create({
     form: {
-        width: '90%',
-        height: '100%',
-        marginLeft: '5%'
+        width: '80%',
+        height: '95%',
+        marginLeft: '10%'
     },
     form_group: {
         position: 'relative',
-        marginTop: 20
+        marginTop: 15
     },
     add_btn: {
         position: 'absolute',
