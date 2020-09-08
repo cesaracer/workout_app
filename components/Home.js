@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { View, Pressable, Text, Button, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Button, StyleSheet, AsyncStorage } from 'react-native'
 import RoutineList from './RoutineList'
-import { TouchableHighlight } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { loadRoutines } from '../actions/action'
+import { connect } from 'react-redux'
 
-function Home(){
-    const [toggle, setToggle] = useState(true)
+function Home({loadList}){
     const navigation = useNavigation()
     return(
         <View style={styles.page}>
