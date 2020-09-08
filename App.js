@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './components/Home';
 import RoutineForm from './components/RoutineForm';
 import Routine from './components/Routine';
-
 const Stack = createStackNavigator();
 
 function App() {
