@@ -6,6 +6,7 @@ import Workout from './Workout'
 import { useNavigation } from '@react-navigation/native'
 import { loadRoutines } from '../actions/action'
 
+//renders page to edit routine
 function RoutineEdit({routine, loadRoutines}){
     const [name, setName] = useState('')
     const [workoutName, setWorkoutName] = useState('')
@@ -14,12 +15,14 @@ function RoutineEdit({routine, loadRoutines}){
 
     const navigation = useNavigation()
 
+    //adding new exercise to selected routine
     const update = async () => {
         await Axios.patch(`https://us-central1-routine-app-99182.cloudfunctions.net/app/routines/edit/${routine.id}`, {"name": name, "workouts": workouts})
         navigation.navigate('Home')
         loadRoutines()
     }
 
+    //prevents user from inputing non int value
     const validate = (num) => {
         if(!isNaN(num)){
             setDuration(num)

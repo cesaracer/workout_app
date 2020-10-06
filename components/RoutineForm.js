@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, ScrollView, AsyncStorage } from 'react-native'
+import { View, TextInput, Button, StyleSheet, ScrollView } from 'react-native'
 import {connect} from 'react-redux'
 import {addRoutine, loadRoutines} from '../actions/action'
 import { useNavigation } from '@react-navigation/native'
 import Workout from './Workout'
 import Axios from 'axios'
 
+//renders form to create routine
 function RoutineForm(props){
     const [routineName, setRoutineName] = useState('')
     const [workouts, setWorkouts] = useState([])

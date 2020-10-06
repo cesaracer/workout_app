@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react'
-import { View, Button, StyleSheet, AsyncStorage } from 'react-native'
+import React from 'react'
+import { View, Button, StyleSheet} from 'react-native'
 import RoutineList from './RoutineList'
 import { useNavigation } from '@react-navigation/native'
-import { loadRoutines } from '../actions/action'
-import { connect } from 'react-redux'
 
 function Home(){
     const navigation = useNavigation()

@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
+//renders workout block component
 function Workout({name, duration}){
     return(
         <View style={styles.workout}>

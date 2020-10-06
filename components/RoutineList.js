@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import RoutineItem from './RoutineItem'
 import { loadRoutines } from '../actions/action'
-import Axios from 'axios'
 
+//renders container for routines
 function RoutineList(props){
     useEffect(() => {
         props.fetchList()
     },[])
+
     return(
         <ScrollView>
             {

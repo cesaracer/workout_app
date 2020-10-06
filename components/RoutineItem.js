@@ -4,9 +4,11 @@ import {connect} from 'react-redux'
 import { setRoutine } from '../actions/action'
 import { useNavigation } from '@react-navigation/native'
 
+//renders routine block component
 function RoutineItem({name, workouts, id, setRoutine}){
     const navigation = useNavigation()
 
+    //setting routine state
     const handlePress = () => {
         setRoutine({
             id: id,
@@ -15,6 +17,7 @@ function RoutineItem({name, workouts, id, setRoutine}){
         })
         navigation.navigate('Details')
     }
+
     return(
         <TouchableHighlight style={styles.item} onPress={handlePress}>
             <Text style={styles.text}>{ name }</Text>

@@ -37,6 +37,7 @@ export const setRoutines = (routines) => {
     }
 }
 
+//retrieving workouts from db
 export function loadRoutines(){
     return(dispatch) => {
         Axios.get('https://us-central1-routine-app-99182.cloudfunctions.net/app/routines/all')

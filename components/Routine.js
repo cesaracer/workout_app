@@ -7,11 +7,14 @@ import { loadRoutines } from '../actions/action'
 import { useNavigation } from '@react-navigation/native'
 import Axios from 'axios'
 
+//renders page to see routine info
 function Routine({routine, loadRoutines}){
     const navigation = useNavigation()
 
     const del = async () => {
         await Axios.delete(`https://us-central1-routine-app-99182.cloudfunctions.net/app/routines/delete/${routine.id}`)
+        
+        //reloading routine list and redirecting user to home page
         loadRoutines()
         navigation.navigate('Home')
     }
@@ -22,6 +25,8 @@ function Routine({routine, loadRoutines}){
                 <TouchableOpacity style={styles.btn_del} onPress={del}>
                     <Text style={styles.text}>Delete</Text>
                 </TouchableOpacity>
+
+                {/* directs user to edit page on click */}
                 <TouchableOpacity style={styles.btn_edit} onPress={() => navigation.navigate('Edit')}>
                     <Text style={styles.text}>Edit</Text>
                 </TouchableOpacity>
