@@ -1,4 +1,4 @@
-import {ADD_ROUTINE, DEL_ROUTINE, SET_ROUTINE, FETCH} from '../actions/actionTypes'
+import {ADD_ROUTINE, DEL_ROUTINE, SET_ROUTINE, FETCH_ROUTINES, FETCH_FOODS} from '../actions/actionTypes'
 import { combineReducers } from 'redux';
 
 const initialRoutine = {
@@ -20,8 +20,17 @@ function routineListReducer(state = [], action){
                 ...state.slice(0, index),
                 ...state.slice(index + 1)
             ]
-        case FETCH: 
+        case FETCH_ROUTINES: 
             return state = action.routines
+        default:
+            return state
+    }
+}
+
+function foodReducer(state = [], action){
+    switch(action.type){
+        case FETCH_FOODS:
+            return state = action.foods
         default:
             return state
     }
@@ -38,7 +47,8 @@ function routineReducer(state = initialRoutine, action){
 
 const reducer = combineReducers({
     routine: routineReducer,
-    routines: routineListReducer
+    routines: routineListReducer,
+    foods: foodReducer
 })
 
 export default reducer;
