@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     page: {
-        width: '80%',
+        backgroundColor: '#00002b',
+        width: '100%',
         height: '100%',
-        marginLeft: '10%',
+        padding: 20,
         flexDirection: 'column'
     },
     text: {

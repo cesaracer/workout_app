@@ -3,6 +3,7 @@ import {Text, StyleSheet, TouchableHighlight} from 'react-native'
 import {connect} from 'react-redux'
 import { setRoutine } from '../actions/action'
 import { useNavigation } from '@react-navigation/native'
+import RoutineEdit from './RoutineEdit'
 
 //renders routine block component
 function RoutineItem({name, workouts, id, setRoutine}){
@@ -33,12 +34,14 @@ const mapDispatchToProps = (dispatch) => {
 
 const styles = StyleSheet.create({
     item: {
-        width: '100%',
+        width: '90%',
+        marginLeft: '5%',
         height: 50,
-        backgroundColor: 'orange',
+        backgroundColor: '#00002b',
+        borderWidth: 2,
+        borderColor: '#4AB5CE',
         justifyContent: 'center', 
         marginTop: 10,
-        marginBottom: 10
     },
     text: {
         color: 'white',

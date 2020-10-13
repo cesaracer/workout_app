@@ -13,7 +13,7 @@ function RoutineList(props){
     return(
         <ScrollView>
             {
-                props.routines.map(r => <RoutineItem name={r.name} workouts={r.workouts} id={r._id}/>)
+                props.routines.map(r => <RoutineItem key={r._id} name={r.name} workouts={r.workouts} id={r._id}/>)
             }
         </ScrollView>
     )

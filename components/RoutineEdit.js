@@ -43,10 +43,10 @@ function RoutineEdit({routine, loadRoutines}){
 
     return(
         <View style={styles.page}>
-            <TextInput style={{marginTop: 15}} placeholder='New routine name' onChangeText={text => setName(text)}/>
+            <TextInput style={styles.textBox} placeholder='New routine name' onChangeText={text => setName(text)}/>
             <View style={{marginTop: 15, marginBottom: 10}}>
-                <TextInput placeholder='Exercise name' onChangeText={text => setWorkoutName(text)}/>
-                <TextInput style={{marginBottom: 15}} placeholder='Minutes' onChangeText={text => validate(text)}/>
+                <TextInput style={styles.textBox} placeholder='Exercise name' onChangeText={text => setWorkoutName(text)}/>
+                <TextInput style={styles.textBox} placeholder='Minutes' onChangeText={text => validate(text)}/>
                 <Button title='Add exercise' color='orange' onPress={addWorkout}/>
             </View>
             <ScrollView>
@@ -73,9 +73,17 @@ const mapDispatchToProps = (dispatch) => {
 
 const styles = StyleSheet.create({
     page: {
-        width: '80%',
-        height: '95%',
-        marginLeft: '10%'
+        backgroundColor: '#00002b',
+        width: '100%',
+        height: '100%',
+        padding: 20
+    },
+    textBox: {
+        backgroundColor: '#272750',
+        borderColor: '#4AB5CE', 
+        borderBottomWidth: 2, 
+        height: 45,
+        marginBottom: 10
     }
 })
 
