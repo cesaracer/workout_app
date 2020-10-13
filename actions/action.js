@@ -1,4 +1,4 @@
-import {ADD_ROUTINE, DEL_ROUTINE, EDIT_ROUTINE, SET_ROUTINE, FETCH} from './actionTypes'
+import {ADD_ROUTINE, DEL_ROUTINE, EDIT_ROUTINE, SET_ROUTINE, FETCH_ROUTINES, FETCH_FOODS} from './actionTypes'
 import Axios from 'axios'
 
 export const addRoutine = (routine) => {
@@ -32,8 +32,15 @@ export const setRoutine = (routine) => {
 
 export const setRoutines = (routines) => {
     return{
-        type: FETCH,
+        type: FETCH_ROUTINES,
         routines
+    }
+}
+
+export const setFoods = (foods) => {
+    return{
+        type: FETCH_FOODS,
+        foods
     }
 }
 
@@ -44,6 +51,16 @@ export function loadRoutines(){
         .then(result => {
             const res = result.data
             dispatch(setRoutines(res))
+        })
+    }
+}
+
+export function loadFoods(){
+    return(dispatch) => {
+        Axios.get('https://us-central1-routine-app-99182.cloudfunctions.net/app/food/all')
+        .then(result => {
+            const res = result.data
+            dispatch(setFoods(res))
         })
     }
 }
