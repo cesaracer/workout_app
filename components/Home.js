@@ -1,34 +1,78 @@
-import React from 'react'
-import { View, Button, StyleSheet} from 'react-native'
-import RoutineList from './RoutineList'
-import { useNavigation } from '@react-navigation/native'
-
+import Axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, Text} from 'react-native'
+import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import WeightItem from './WeightItem'
 function Home(){
-    const navigation = useNavigation()
+    const [weight, setWeight] = useState(0)
+    const [resData, setData] = useState([])
+
+    useEffect(() => {
+        getWeights()
+    },[])
+
+    const sendWeight = async () => {
+        await Axios.post('https://us-central1-routine-app-99182.cloudfunctions.net/app/weight/add', {weight: weight})
+        setWeight(0)
+        getWeights()
+    }
+
+    const getWeights = () => {
+        fetch('https://us-central1-routine-app-99182.cloudfunctions.net/app/weight/all')
+        .then(res => res.json())
+        .then(data => setData(data))
+    }
+
     return(
         <View style={styles.page}>
-            <RoutineList/>
-            <View style={styles.btn}>
-                <Button title='Add Routine' onPress={() => navigation.navigate('Create Routine')} color='orange'/>
+            <View style={styles.section}>
+                <TextInput style={styles.textbox} placeholder="lbs" value={weight.toString()} onChangeText={text => setWeight(text)}></TextInput>
+                <TouchableOpacity style={styles.btn} onPress={sendWeight}>
+                    <Text style={{color: '#00002b'}}>Enter Weight</Text>
+                </TouchableOpacity>
             </View>
+            <ScrollView style={{marginTop: 30}}>
+                {
+                    resData.map(w => <WeightItem key={w._id} {...w}/>)
+                }
+            </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    btn: {
-        height: 100,
-        justifyContent: 'center',
-        width: 100,
-        borderRadius: 50,
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 0,
-        right: 0
-    },
     page: {
-        paddingTop: 15,
-        height: '100%'
+        backgroundColor: '#00002b',
+        height: '100%',
+        width: '100%',
+        alignItems: 'center'
+    },
+    section: {
+        width: '100%', 
+        marginTop: 50,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    btn: {
+        width: 120,
+        height: 40,
+        backgroundColor: 'orange',
+        borderWidth: 2,
+        borderColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#4AB5CE',
+        backgroundColor: '#4AB5CE'
+    },
+    textbox: {
+        width: '50%',
+        height: 40,
+        marginRight: 15,
+        textAlign: 'center',
+        borderWidth: 2,
+        borderColor: '#4AB5CE',
+        color: '#4AB5CE',
+        backgroundColor: '#272750'
     }
 })
 
